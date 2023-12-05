@@ -7,49 +7,62 @@
     --background-color: #344E5C;
     --dark-background-color: #263842;
     --success-color: #4AB19D;
-    --container-radius:6px;
+    --container-radius: 6px;
 }
 
-.jobFlex{
-    display:flex;
-    gap:1em;
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 2px solid var(--dark-background-color);
+    margin: 1em 0;
+    padding: 0;
+}
+
+.jobFlex {
+    display: flex;
+    gap: 1em;
     flex-direction: column;
-    padding:16px;
-    max-width:500px;
+    padding: 16px;
+    max-width: 500px;
+    background-color: var(--background-color);
+    color: white;
+    text-align: start;
 }
 
-.progressCircle{
-    width:75px;
-    height:75px;
-    border-radius:100%;
+.progressCircle {
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
     position: relative;
 }
-.progressCircle::before{
+
+.progressCircle::before {
     position: absolute;
-    top:0;
-    right:0;
-    content:"";
-    z-index:2;
-    width:75px;
-    height:75px;
-    border-radius:100%;
-    background-color:var(--background-color);
+    top: 0;
+    right: 0;
+    content: "";
+    z-index: 2;
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
+    background-color: var(--background-color);
     transform-origin: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(0deg);
 }
 
-.progressCircle::after{
+.progressCircle::after {
     position: absolute;
-    top:0;
-    right:0;
-    content:"";
-    z-index:0;
-    border-radius:100%;
-    width:85px;
-    height:85px;
-    background-color:var(--success-color);
+    top: 0;
+    right: 0;
+    content: "";
+    z-index: 0;
+    border-radius: 100%;
+    width: 85px;
+    height: 85px;
+    background-color: var(--success-color);
     animation: rotate 3s linear infinite;
     transform-origin: center;
     top: 50%;
@@ -62,60 +75,65 @@
     0% {
         transform: translate(-50%, -50%) rotate(0deg);
     }
+
     100% {
         transform: translate(-50%, -50%) rotate(360deg);
     }
-  }
-
-.jobContainer{
-    background-color:var(--background-color);
-    border-radius:var(--container-radius);
-    color:white;
-    padding:1.5em;
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    gap:1.5em;
 }
 
-.jobInfo{
+.jobContainer {
+    background-color: var(--background-color);
+    border-radius: var(--container-radius);
+    color: white;
+    padding: 1.5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.jobInfo {
     display: flex;
     align-items: start;
     flex-direction: column;
-    color:white;
-    gap:6px;
+    color: white;
+    gap: 6px;
     overflow: hidden;
-    
+
 }
 
-.jobInfo p{
+.jobInfo p {
     margin: 0px;
     text-overflow: ellipsis;
-    text-wrap:nowrap;
+    text-wrap: nowrap;
     display: -webkit-box;
 }
-.jobInfo .name{
-    font-weight:700;
-    font-size:1.25rem;
-}
-.jobInfo .desc{
-    font-weight:300;
-    color:white;
+
+.jobInfo .name {
+    font-weight: 700;
+    font-size: 1.25rem;
 }
 
-.status{
-    border-radius:50%;
-    background-color:var(--dark-background-color);
-    width:1.5em;
-    height:1.5em;
+.jobInfo .desc {
+    font-weight: 300;
+    color: white;
 }
 
-.status.error{
-    background-color:var(--error-color);
+.status {
+    border-radius: 50%;
+    background-color: var(--dark-background-color);
+    width: 1.5em;
+    height: 1.5em;
 }
-.status.success{
-    background-color:var(--success-color);
+
+.status.error {
+    background-color: var(--error-color);
 }
-.status.warning{
-    background-color:var(--warning-color);
+
+.status.success {
+    background-color: var(--success-color);
+}
+
+.status.warning {
+    background-color: var(--warning-color);
 }
