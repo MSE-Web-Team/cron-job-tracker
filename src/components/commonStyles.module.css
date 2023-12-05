@@ -92,6 +92,17 @@ hr {
     gap: 1.5em;
 }
 
+.logContainer {
+    background-color: var(--background-color);
+    border-radius: var(--container-radius);
+    color: white;
+    padding: 1.5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5em;
+}
+
 .jobInfo {
     display: flex;
     align-items: start;
@@ -119,11 +130,16 @@ hr {
     color: white;
 }
 
+.smallStatus{
+    width:16px;
+    height:16px;
+}
+
 .status {
     border-radius: 50%;
     background-color: var(--dark-background-color);
-    width: 1.5em;
-    height: 1.5em;
+    width: 24px;
+    height: 24px;
 }
 
 .status.error {

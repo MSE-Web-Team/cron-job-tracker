@@ -3,6 +3,7 @@ import './App.css';
 import Job from './components/Jobs/Job';
 import RunningJob from './components/Jobs/RunningJob';
 import JobContainer from './components/Jobs/JobContainer';
+import LogMessage from './components/Logs/LogMessage';
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
         <Job status={"error"} job_name={"Job naasdasd asd asd sad asds asdasd ame here"} description={"This is a test so that it wil work"}></Job>
         <Job status={"error"} job_name={"Job naasdasd asd asd sad asds asdasd ame here"} description={"This is a test so that it wil work"}></Job>
       </JobContainer>
+
+      <LogMessage status="error" name="EHIAHDIW" description={"asdasd"}></LogMessage>
     </div>
   );
 }
