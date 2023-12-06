@@ -30,6 +30,16 @@ hr {
     text-align: start;
 }
 
+.logFlex {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    max-width: 500px;
+    background-color: var(--background-color);
+    color: white;
+    text-align: start;
+}
+
 .progressCircle {
     width: 75px;
     height: 75px;
@@ -96,7 +106,7 @@ hr {
     background-color: var(--background-color);
     border-radius: var(--container-radius);
     color: white;
-    padding: 1.5em;
+    padding: 0.5em 1em;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -130,17 +140,23 @@ hr {
     color: white;
 }
 
-.smallStatus{
-    width:16px;
-    height:16px;
-}
 
 .status {
     border-radius: 50%;
     background-color: var(--dark-background-color);
     width: 24px;
+    min-width:24px;
+    min-height:24px;
     height: 24px;
 }
+
+.smallStatus{
+    width:16px;
+    height:16px;
+    min-width:16px;
+    min-height:16px;
+}
+
 
 .status.error {
     background-color: var(--error-color);

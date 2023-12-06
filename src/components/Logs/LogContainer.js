@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
+import styles from '../commonStyles.module.css';
 
-const LogContainer = () => {
-  // State example
-  const [count, setCount] = useState(0);
-
-  // Event handler
-  const handleIncrement = () => {
-    setCount(count + 1);
-  };
-
-  return (
-    <div>
-      <h1>Hello, World!</h1>
-      <p>Count: {count}</p>
-      <button onClick={handleIncrement}>Increment</button>
+const LogContainer = ({ children }) => (
+    <div className={styles.logFlex}>
+        {children}
     </div>
-  );
-};
+);
 
 export default LogContainer;

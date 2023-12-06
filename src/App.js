@@ -4,13 +4,14 @@ import Job from './components/Jobs/Job';
 import RunningJob from './components/Jobs/RunningJob';
 import JobContainer from './components/Jobs/JobContainer';
 import LogMessage from './components/Logs/LogMessage';
+import LogContainer from './components/Logs/LogContainer';
 
 function App() {
 
   return (
     <div className="App">
       <JobContainer>
-        <h1>Current Jobs</h1>
+        <h2>Current Jobs</h2>
         <RunningJob job_name={"Job #1"} start_time={new Date()}></RunningJob>
         <RunningJob job_name={"MAS student update"} start_time={new Date()}></RunningJob>
         <hr></hr>
@@ -19,8 +20,14 @@ function App() {
         <Job status={"error"} job_name={"Job naasdasd asd asd sad asds asdasd ame here"} description={"This is a test so that it wil work"}></Job>
         <Job status={"error"} job_name={"Job naasdasd asd asd sad asds asdasd ame here"} description={"This is a test so that it wil work"}></Job>
       </JobContainer>
-
-      <LogMessage status="error" name="EHIAHDIW" description={"asdasd"}></LogMessage>
+      <LogContainer>
+        <h2>Current Logs</h2>
+        <LogMessage status="error" name="EHIAHDIW" description={"asdasd"}></LogMessage>
+        <LogMessage status="error" name="EHIAHDIW" description={"asdasd"}></LogMessage>
+        <LogMessage status="error" name="EHIAHDIW" description={"asdasd"}></LogMessage>
+        <LogMessage status="error" name="EHIAHDIW" description={"asdasd"}></LogMessage>
+      </LogContainer>
+      
     </div>
   );
 }
