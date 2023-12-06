@@ -140,6 +140,26 @@ hr {
     color: white;
 }
 
+.logInfo{
+    margin: 0px;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    display: -webkit-box;
+    display: flex;
+    align-items: center;
+    gap:1em;
+}
+
+.logInfo .name {
+    font-weight: 700;
+    font-size: 1em;
+}
+
+.logInfo .desc {
+    font-weight: 300;
+    font-size: 1em;
+    color: white;
+}
 
 .status {
     border-radius: 50%;

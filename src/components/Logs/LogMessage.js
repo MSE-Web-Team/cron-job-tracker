@@ -36,8 +36,10 @@ const LogMessage = ({ status, name, description }) => {
                 
             </div>
             )}
+            <div className={styles.logInfo}>
               <p className={styles.name}>{jobInfo.name}</p>
               <p className={styles.desc}>{jobInfo.description}</p>
+            </div>
         </div>
     );
 };

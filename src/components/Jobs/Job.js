@@ -36,10 +36,8 @@ const Job = ({ status, job_name, description }) => {
                 
             </div>
             )}
-            <div className={styles.jobInfo}>
-                <p className={styles.name}>{jobInfo.name}</p>
-                <p className={styles.desc}>{jobInfo.description}</p>
-            </div>
+            <p className={styles.name}>{jobInfo.name}</p>
+            <p className={styles.desc}>{jobInfo.description}</p>
         </div>
     );
 };
