@@ -23,5 +23,5 @@ services:
       dockerfile: Dockerfile.database
     container_name: crondatabase
     volumes:
-      - ./data:/data
+      - /host/db/local-db:/data
     restart: always
