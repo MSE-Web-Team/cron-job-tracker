@@ -1,0 +1,17 @@
+FROM alpine:latest
+
+# Install SQLite
+RUN apk --update add sqlite
+
+# Set the working directory
+WORKDIR /data
+
+# Expose a volume for persistence
+VOLUME /data
+
+# Add a startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Run the startup script when the container starts
+CMD ["/start.sh"]
