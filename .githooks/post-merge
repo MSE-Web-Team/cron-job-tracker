@@ -1,0 +1,5 @@
+#!/bin/bash
+cd /home/ec2-user/cron-job-tracker
+docker-compose -f docker-compose.yml down
+git pull
+docker-compose -f docker-compose.yml up -d --build
