@@ -56,6 +56,7 @@ def create_job():
         end_time=data.get('end_time'),
         status=data.get('status', 'SUCCESS')
     )
+    
     db.session.add(new_job)
     db.session.commit()
     return jsonify({'message': 'Job created successfully!', 'job_id': new_job.id})
