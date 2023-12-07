@@ -5,12 +5,11 @@ FROM alpine:latest
 # Install SQLite
 RUN apk --update add sqlite
 
-# Create a directory for the SQLite database file
-RUN mkdir /data
-
 # Set the working directory
 WORKDIR /data
 
 # Expose a volume for persistence
 VOLUME /data
 
+# Create an SQLite database file within the volume
+RUN sqlite3 mydatabase.db
