@@ -8,6 +8,8 @@ services:
     ports:
       - "3000:3000"
     restart: always
+    depends_on:
+      - db
 
   backend:
     build:
@@ -17,11 +19,8 @@ services:
       - "5000:5000"
     restart: always
 
-  database:
-    build:
-      context: .
-      dockerfile: Dockerfile.database
-    container_name: crondatabase
+  db:
+    image: "sqlite"
     volumes:
-      - /host/db/local-db:/data
+      - ./data:/data
     restart: always
