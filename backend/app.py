@@ -18,6 +18,7 @@ class Job(db.Model):
     end_time = db.Column(db.DateTime, nullable=True)
     status = db.Column(db.Enum('ERROR', 'SUCCESS', 'UNDEFINED', 'INFO'), default='SUCCESS')
 
+
     def __repr__(self):
         return f'<Job {self.id}, {self.process_name}, Status: {self.status}>'
 
@@ -56,7 +57,7 @@ def create_job():
         end_time=data.get('end_time'),
         status=data.get('status', 'SUCCESS')
     )
-    
+
     db.session.add(new_job)
     db.session.commit()
     return jsonify({'message': 'Job created successfully!', 'job_id': new_job.id})
