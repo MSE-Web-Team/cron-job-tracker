@@ -11,14 +11,6 @@ RUN mkdir /data
 # Set the working directory
 WORKDIR /data
 
-# Copy a script that will keep the container running
-COPY run.sh /data/run.sh
-
-# Grant execute permissions to the script
-RUN chmod +x /data/run.sh
-
 # Expose a volume for persistence
 VOLUME /data
 
-# Command to run when the container starts
-CMD ["/data/run.sh"]

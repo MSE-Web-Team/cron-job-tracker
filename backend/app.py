@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -16,17 +16,26 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
-@app.route('/api')
-def api_endpoint():
-    # Create a user and add it to the database as an example
-    new_user = User(username='example_user')
-    db.session.add(new_user)
-    db.session.commit()
+# Create the database tables before running the app
+with app.app_context():
+    db.create_all()
 
-    return 'Hello from the API endpoint!'
+# Route to get all users
+@app.route('/api/users', methods=['GET'])
+def get_users():
+    with app.app_context():
+        users = User.query.all()
+        user_list = [{'id': user.id, 'username': user.username} for user in users]
+    return jsonify({'users': user_list})
+
+# Route to create a new user
+@app.route('/api/create_user', methods=['POST'])
+def create_user():
+    with app.app_context():
+        new_user = User(username='new_user')
+        db.session.add(new_user)
+        db.session.commit()
+    return 'User created successfully!'
 
 if __name__ == '__main__':
-    # Create the database tables before running the app
-    db.create_all()
-    
     app.run(debug=True, host='0.0.0.0', port=5000)
