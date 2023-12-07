@@ -13,7 +13,7 @@ class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     process_name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    ongoing = db.Column(db.Boolean(), default=True)  # Defaulting to ongoing
+    ongoing = db.Column(db.Boolean(), default=False)  # Defaulting to ongoing
     start_time = db.Column(db.DateTime, default=datetime.utcnow)
     end_time = db.Column(db.DateTime, nullable=True)
     status = db.Column(db.Enum('ERROR', 'SUCCESS', 'UNDEFINED', 'INFO'), default='SUCCESS')

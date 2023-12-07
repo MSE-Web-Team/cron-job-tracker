@@ -23,5 +23,5 @@ services:
       dockerfile: Dockerfile.database
     container_name: my_sqlite_database
     volumes:
-      - ./data:/data
+      - /host/db/local-db:/data
     restart: always
