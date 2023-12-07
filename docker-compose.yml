@@ -16,3 +16,10 @@ services:
     ports:
       - "5000:5000"
     restart: always
+
+  database:
+    image: sqlite:latest
+    container_name: my_sqlite_database
+    volumes:
+      - ./data:/data
+    restart: always
