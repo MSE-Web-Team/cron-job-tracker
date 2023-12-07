@@ -18,7 +18,6 @@ class Job(db.Model):
     end_time = db.Column(db.DateTime, nullable=True)
     status = db.Column(db.Enum('ERROR', 'SUCCESS', 'UNDEFINED', 'INFO'), default='SUCCESS')
 
-
     def __repr__(self):
         return f'<Job {self.id}, {self.process_name}, Status: {self.status}>'
 
