@@ -10,11 +10,11 @@ class Job(db.Model):
     ongoing = db.Column(db.Boolean(), default=False)  # Defaulting to ongoing
     start_time = db.Column(db.DateTime, default=datetime.utcnow)
     end_time = db.Column(db.DateTime, nullable=True)
-    status = db.Column(db.Enum('ERROR', 'SUCCESS', 'UNDEFINED', 'INFO'), default='SUCCESS')
+    status = db.Column(db.Enum('ERROR', 'SUCCESS', 'UNDEFINED', 'INFO', 'RUNNING'), default='SUCCESS')
 
     def __repr__(self):
         return f'<Job {self.id}, {self.process_name}, Status: {self.status}>'
-        
+
 class LogMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     process_name = db.Column(db.String(255), nullable=False)
