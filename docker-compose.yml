@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-  database:
-    image: sqlite3:latest
-    stdin_open: true
-    tty: true
+  db:
+    image: nouchka/sqlite3:latest
     volumes:
-      - ./db/:/db/
+      - ./data/db:/root/db
+    environment:
+      - SQLITE3_DB=db.sqlite3
     restart: always
   frontend:
     build:
@@ -22,5 +22,7 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    depends_on:
+      - db
 
   
