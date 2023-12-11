@@ -14,6 +14,10 @@ from routes import job_routes, log_message_routes
 app.register_blueprint(job_routes)
 app.register_blueprint(log_message_routes)
 
-if __name__ == '__main__':
+# Create application context
+with app.app_context():
+    # Create database tables
     db.create_all()
+
+if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
