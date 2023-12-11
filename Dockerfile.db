@@ -1,0 +1,5 @@
+# Copy the script into the image
+COPY init_db.sh /root/init_db.sh
+
+# Run the script
+RUN chmod +x /root/init_db.sh && /root/init_db.sh
