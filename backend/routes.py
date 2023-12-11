@@ -5,7 +5,7 @@ from datetime import datetime
 job_routes = Blueprint('job_routes', __name__)
 log_message_routes = Blueprint('log_message_routes', __name__)
 
-@app.route('/api/jobs', methods=['GET'])
+@job_routes.route('/api/jobs', methods=['GET'])
 def get_jobs():
     jobs = Job.query.all()
     job_list = [{'id': job.id, 'process_name': job.process_name, 'description': job.description,
@@ -14,7 +14,7 @@ def get_jobs():
                  'status': job.status} for job in jobs]
     return jsonify({'jobs': job_list})
 
-@app.route('/api/jobs', methods=['POST'])
+@job_routes.route('/api/jobs', methods=['POST'])
 def create_job():
     data = request.json
     new_job = Job(
@@ -33,7 +33,7 @@ def create_job():
 
 # Define routes for LogMessage model
 
-@app.route('/api/log_messages', methods=['GET'])
+@log_message_routes.route('/api/log_messages', methods=['GET'])
 def get_log_messages():
     log_messages = LogMessage.query.all()
     log_message_list = [{'id': log_message.id, 'process_name': log_message.process_name,
@@ -41,7 +41,7 @@ def get_log_messages():
                          'level': log_message.level} for log_message in log_messages]
     return jsonify({'log_messages': log_message_list})
 
-@app.route('/api/log_messages', methods=['POST'])
+@log_message_routes.route('/api/log_messages', methods=['POST'])
 def create_log_message():
     data = request.json
     new_log_message = LogMessage(
