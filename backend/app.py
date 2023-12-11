@@ -4,11 +4,9 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# Database configuration for MySQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://mseweb:mseweb@database/cron_db'
+# SQLite database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-
 db = SQLAlchemy(app)
 
 class Job(db.Model):

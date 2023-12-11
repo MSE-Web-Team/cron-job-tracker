@@ -16,19 +16,12 @@ services:
     ports:
       - "5000:5000"
     restart: always
-    depends_on:
-      - database
 
   database:
-    image: mysql:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.database
     container_name: crondatabase
     volumes:
-      - ./data/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: mseweb
-      MYSQL_DATABASE: cron_db
-      MYSQL_USER: mseweb
-      MYSQL_PASSWORD: mseweb
-    ports:
-      - "3306:3306"
+      - ./data:/data
     restart: always
