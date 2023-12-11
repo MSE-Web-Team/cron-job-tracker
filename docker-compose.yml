@@ -1,13 +1,13 @@
 version: '3'
-
 services:
   db:
-    build:
-      context: .
-      dockerfile: Dockerfile.db
+    image: nouchka/sqlite3:latest
     volumes:
       - ./data/db:/root/db
+    environment:
+      - SQLITE3_DB=db.sqlite3
     restart: always
+
   frontend:
     build:
       context: .
@@ -22,6 +22,8 @@ services:
       dockerfile: Dockerfile.backend
     ports:
       - "5000:5000"
+    volumes:
+      - ./data/db:/root/db
     restart: always
     depends_on:
       - db
