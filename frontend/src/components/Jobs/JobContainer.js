@@ -3,7 +3,7 @@ import RunningJob from './RunningJob';
 import Job from './Job';
 import styles from '../commonStyles.module.css';
 
-const JobContainer = () => {
+const JobContainer = ({ status }) => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
@@ -26,13 +26,15 @@ const JobContainer = () => {
     fetchJobs();
   }, []);
 
+  const filteredJobs = jobs.filter(job => job.status === status);
+
   return (
     <div className={styles.jobFlex}>
-      <h2>Current Jobs</h2>
-      {jobs.map(job => {
+      <h2>Current Jobs - {status}</h2>
+      {filteredJobs.map(job => {
         const { id, process_name, start_time, status } = job;
 
-        if (status === 'SUCCESS' || status === 'INFO') {
+        if (status === 'RUNNING') {
           return (
             <RunningJob
               key={id}
@@ -40,7 +42,7 @@ const JobContainer = () => {
               start_time={new Date(start_time)}
             />
           );
-        } else if (status === 'ERROR' || status === 'UNKNOWN') {
+        } else {
           return (
             <Job
               key={id}

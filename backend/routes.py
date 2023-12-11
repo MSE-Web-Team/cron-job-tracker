@@ -23,7 +23,7 @@ def create_job():
         ongoing=data.get('ongoing', True),
         start_time=data.get('start_time', datetime.utcnow()),
         end_time=data.get('end_time'),
-        status=data.get('status', 'SUCCESS')
+        status=data.get('status', 'RUNNING')
     )
 
     db.session.add(new_job)
