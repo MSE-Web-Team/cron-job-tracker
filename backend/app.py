@@ -31,8 +31,6 @@ class LogMessage(db.Model):
     def __repr__(self):
         return f'<LogMessage {self.timestamp}, Level: {self.level}, Message: {self.message}>'
 
-    
-
 # Create the database tables before running the app
 with app.app_context():
     db.create_all()
