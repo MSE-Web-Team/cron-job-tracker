@@ -18,10 +18,9 @@ services:
     restart: always
 
   database:
-    build:
-      context: .
-      dockerfile: Dockerfile.database
-    container_name: crondatabase
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
     volumes:
-      - ./data:/data
+      - ./db/:/root/db/
     restart: always
