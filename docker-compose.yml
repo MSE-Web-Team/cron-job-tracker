@@ -18,10 +18,8 @@ services:
     restart: always
 
   database:
-    build:
-      context: .
-      dockerfile: Dockerfile.database
+    image: sqlite:latest
     container_name: crondatabase
     volumes:
-      - /host/db/local-db:/data
+      - ./data:/data
     restart: always
