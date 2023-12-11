@@ -30,7 +30,7 @@ const JobContainer = ({ status }) => {
 
   return (
     <div className={styles.jobFlex}>
-      <h2>Current Jobs - {status}</h2>
+      <h2>Jobs - {status}</h2>
       {filteredJobs.map(job => {
         const { id, process_name, start_time, status } = job;
 
