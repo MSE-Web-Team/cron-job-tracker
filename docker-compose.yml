@@ -16,10 +16,27 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    depends_on:
+      - database
+    networks:
+      - cron_network
 
   database:
-    image: sqlite:latest
+    image: mysql:latest
     container_name: crondatabase
     volumes:
-      - ./data:/data
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mseweb
+      MYSQL_DATABASE: cron_db
+      MYSQL_USER: mseweb
+      MYSQL_PASSWORD: flask_app_password
+    ports:
+      - "3306:3306"
     restart: always
+    networks:
+      - cron_network
+
+networks:
+  cron_network:
+    driver: bridge
