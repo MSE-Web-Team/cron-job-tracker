@@ -32,7 +32,7 @@ const JobContainer = ({ status }) => {
     <div className={styles.jobFlex}>
       <h2>Jobs - {status}</h2>
       {filteredJobs.map(job => {
-        const { id, process_name, start_time, status } = job;
+        const { id, process_name, start_time, status, description } = job;
 
         if (status === 'RUNNING') {
           return (
@@ -48,7 +48,7 @@ const JobContainer = ({ status }) => {
               key={id}
               status={status.toLowerCase()}
               job_name={process_name}
-              description={`This is a test so that it will work for status: ${status}`}
+              description={description}
             />
           );
         }
