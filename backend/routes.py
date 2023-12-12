@@ -23,16 +23,29 @@ def create_job():
         ongoing=data.get('ongoing', True),
         start_time=data.get('start_time', datetime.utcnow()),
         end_time=data.get('end_time'),
-        status=data.get('status', 'RUNNING')
+        status=data.get('status', 'LOG')
     )
 
     db.session.add(new_job)
     db.session.commit()
     return jsonify({'message': 'Job created successfully!', 'job_id': new_job.id})
 
+@app.route('/update_job/<int:job_id>', methods=['PUT'])
+def update_job(job_id):
+    job = Job.query.get_or_404(job_id)
+    data = request.json
+
+    # Update job status, end time, etc.
+    job.status = data.get('status', job.status)
+    job.end_time = data.get('end_time', job.end_time)
+    # Update other fields as needed
+
+    db.session.commit()
+
+    return jsonify({'message': 'Job updated successfully'}), 200
+
 
 # Define routes for LogMessage model
-
 @log_message_routes.route('/api/log_messages', methods=['GET'])
 def get_log_messages():
     log_messages = LogMessage.query.all()
