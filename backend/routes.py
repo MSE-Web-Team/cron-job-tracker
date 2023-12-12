@@ -30,7 +30,7 @@ def create_job():
     db.session.commit()
     return jsonify({'message': 'Job created successfully!', 'job_id': new_job.id})
 
-@app.route('/update_job/<int:job_id>', methods=['PUT'])
+@job_routes.route('/update_job/<int:job_id>', methods=['PUT'])
 def update_job(job_id):
     job = Job.query.get_or_404(job_id)
     data = request.json
