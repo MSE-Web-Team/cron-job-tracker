@@ -31,6 +31,7 @@ def create_job():
         end_time=data.get('end_time'),
         status=data.get('status', 'LOG')
     )
+    
 
     db.session.add(new_job)
     db.session.commit()
