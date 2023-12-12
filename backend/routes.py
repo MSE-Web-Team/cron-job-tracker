@@ -33,6 +33,7 @@ def create_job():
     )
     
 
+
     db.session.add(new_job)
     db.session.commit()
 
