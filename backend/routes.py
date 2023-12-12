@@ -21,7 +21,8 @@ def create_job():
     # Ensure 'status' is a valid enum value
     valid_levels = {'EMERGENCY', 'SUCCESS', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'LOG', 'RUNNING'}
     if 'status' in data and data['status'] not in valid_statuses:
-        return jsonify({'error': f"Invalid 'status' value. Allowed values: {', '.join(valid_statuses)}}"})
+        return jsonify({'error': f"Invalid 'status' value. Allowed values: {', '.join(map(str, valid_statuses))}"})
+
 
     new_job = Job(
         process_name=data['process_name'],
@@ -69,7 +70,8 @@ def create_log_message():
     # Ensure 'level' is a valid enum value
     valid_levels = {'EMERGENCY', 'SUCCESS', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'LOG'}
     if 'level' in data and data['level'] not in valid_levels:
-        return jsonify({'error': f"Invalid 'level' value. Allowed values: {', '.join(valid_levels)}}"})
+        return jsonify({'error': f"Invalid 'level' value. Allowed values: {', '.join(map(str, valid_statuses))}"})
+
 
     new_log_message = LogMessage(
         process_name=data['process_name'],
