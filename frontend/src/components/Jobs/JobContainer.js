@@ -56,7 +56,6 @@ const JobContainer = ({ status }) => {
         // Add more conditions for other statuses if needed
         return null;
       })}
-      <hr />
       {/* Render other job components as needed */}
     </div>
   );
