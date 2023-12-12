@@ -1,8 +1,11 @@
 from flask import Flask
 from models import db
 from routes import job_routes, log_message_routes
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 # Configure SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////root/db/db.sqlite3'
