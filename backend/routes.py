@@ -17,6 +17,12 @@ def get_jobs():
 @job_routes.route('/api/jobs', methods=['POST'])
 def create_job():
     data = request.json
+
+    # Ensure 'status' is a valid enum value
+    valid_levels = {'EMERGENCY', 'SUCCESS', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'LOG', 'RUNNING'}
+    if 'status' in data and data['status'] not in valid_statuses:
+        return jsonify({'error': f"Invalid 'status' value. Allowed values: {', '.join(valid_statuses)}}")
+
     new_job = Job(
         process_name=data['process_name'],
         description=data['description'],
@@ -28,6 +34,7 @@ def create_job():
 
     db.session.add(new_job)
     db.session.commit()
+
     return jsonify({'message': 'Job created successfully!', 'job_id': new_job.id})
 
 @job_routes.route('/update_job/<int:job_id>', methods=['PUT'])
@@ -54,15 +61,24 @@ def get_log_messages():
                          'level': log_message.level} for log_message in log_messages]
     return jsonify({'log_messages': log_message_list})
 
+
 @log_message_routes.route('/api/log_messages', methods=['POST'])
 def create_log_message():
     data = request.json
+
+    # Ensure 'level' is a valid enum value
+    valid_levels = {'EMERGENCY', 'SUCCESS', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'LOG'}
+    if 'level' in data and data['level'] not in valid_levels:
+        return jsonify({'error': f"Invalid 'level' value. Allowed values: {', '.join(valid_levels)}}")
+
     new_log_message = LogMessage(
         process_name=data['process_name'],
         timestamp=data.get('timestamp', datetime.utcnow()),
         message=data['message'],
         level=data.get('level', 'INFO')
     )
+
     db.session.add(new_log_message)
     db.session.commit()
+
     return jsonify({'message': 'Log message created successfully!', 'log_message_id': new_log_message.id})
