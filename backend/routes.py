@@ -43,10 +43,31 @@ def update_job(job_id):
     job = Job.query.get_or_404(job_id)
     data = request.json
 
+    # Ensure 'status' is a valid enum value
+    valid_statuses = {'EMERGENCY', 'SUCCESS', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'LOG', 'RUNNING'}
+    if 'status' in data and data['status'] not in valid_statuses:
+        return jsonify({'error': f"Invalid 'status' value. Allowed values: {', '.join(map(str, valid_statuses))}"})
+
+
+
     # Update job status, end time, etc.
     job.status = data.get('status', job.status)
-    job.end_time = data.get('end_time', job.end_time)
-    # Update other fields as needed
+    if 'end_time' in data:
+        end_time_str = data.get('end_time', job.end_time)
+        
+        # Define the expected format of the end_time
+        date_format = "%Y-%m-%d %H:%M:%S"
+        
+        try:
+            # Try to parse the end_time string into a datetime object
+            end_time = datetime.strptime(end_time_str, date_format)
+            
+            # If successful, update the job's end_time
+            job.end_time = end_time
+        except ValueError:
+            # If parsing fails, handle the error (e.g., print a message or set a default value)
+            print("Error: Invalid end_time format. Please provide the time in the format: YYYY-MM-DD HH:MM:SS")
+            # Optionally, you can set a default value or raise an exception here
 
     db.session.commit()
 
