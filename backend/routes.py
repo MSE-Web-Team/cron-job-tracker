@@ -1,9 +1,57 @@
 from flask import Blueprint, jsonify, request
 from models import db, Job, LogMessage
-from datetime import datetime
+from datetime import datetime, timedelta
 
 job_routes = Blueprint('job_routes', __name__)
 log_message_routes = Blueprint('log_message_routes', __name__)
+
+# TODO: Make this run in a schedule:
+@job_routes.route('/api/update_running_jobs', methods=['GET'])
+def update_running_jobs():
+    running_jobs = Job.query.filter_by(status='RUNNING').all()
+
+    current_time = datetime.now()
+
+    for job in running_jobs:
+        start_time = job.start_time
+
+        # Assuming start_time is a datetime field in your Job model
+        if start_time is not None:
+            time_difference = current_time - start_time
+
+            # Check if the time difference is greater than 24 hours
+            if time_difference > timedelta(hours=24):
+                # Do something with the job, e.g., mark it as overdue
+                job.description = 'This job was running for 24 hours and hasn\'t been updated.'
+                job.status = 'ERROR'
+                # You might want to commit the changes to the database
+                db.session.commit()
+
+    return jsonify({'message': 'Running jobs updated'})
+
+@job_routes.route('/api/clear_jobs', methods=['POST'])
+def remove_jobs():
+    try:
+        # Query all jobs
+        jobs = Job.query.all()
+
+        # Remove each job from the database
+        for job in jobs:
+            db.session.delete(job)
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        return jsonify({'message': 'Jobs successfully cleared'}), 200
+
+    except Exception as e:
+        # Handle any exceptions that may occur during the process
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        # Close the database session
+        db.session.close()
+
 
 @job_routes.route('/api/jobs', methods=['GET'])
 def get_jobs():
@@ -52,6 +100,8 @@ def update_job(job_id):
 
     # Update job status, end time, etc.
     job.status = data.get('status', job.status)
+
+    # Update end time of the job if it is in there
     if 'end_time' in data:
         end_time_str = data.get('end_time', job.end_time)
         
@@ -105,3 +155,26 @@ def create_log_message():
     db.session.commit()
 
     return jsonify({'message': 'Log message created successfully!', 'log_message_id': new_log_message.id})
+
+@log_message_routes.route('/api/clear_logs', methods=['POST'])
+def remove_logs():
+    try:
+        # Query all jobs
+        logs = LogMessage.query.all()
+
+        # Remove each job from the database
+        for log in logs:
+            db.session.delete(log)
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        return jsonify({'message': 'Logs successfully cleared'}), 200
+
+    except Exception as e:
+        # Handle any exceptions that may occur during the process
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        # Close the database session
+        db.session.close()
