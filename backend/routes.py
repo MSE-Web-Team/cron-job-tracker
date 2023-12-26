@@ -158,7 +158,7 @@ def create_job():
     finally:
         db.session.close()
 
-@job_routes.route('/update_job/<int:job_id>', methods=['PUT'])
+@job_routes.route('/api/jobs/<int:job_id>', methods=['PUT'])
 def update_job(job_id):
     """
     Update an existing job.
