@@ -13,14 +13,16 @@ from datetime import datetime
     
 """
 
-def create_job(process_name, api_url):
+API_URL = ""  # Update with your actual API URL
+
+def create_job(process_name, API_URL):
     data = {
         "process_name": process_name,
         "description": "Created on Education Server",
         "status": "RUNNING"
     }
 
-    response = requests.post(api_url, json=data, verify=False)
+    response = requests.post(API_URL, json=data, verify=False)
 
     if response.status_code < 400:
         job_id = response.json().get('job_id')
@@ -30,14 +32,14 @@ def create_job(process_name, api_url):
         print(f"Failed to create job. Response: {response.text}")
         return None
 
-def update_job_status(process_name, api_url, status = "SUCCESS"):
-    job_id = get_most_recent_job_id(process_name, api_url)
+def update_job_status(process_name, API_URL, status = "SUCCESS"):
+    job_id = get_most_recent_job_id(process_name, API_URL)
 
     if not job_id:
         print(f"No job found for process name: {process_name}")
         return
 
-    update_url = f"{api_url}/{job_id}"
+    update_url = f"{API_URL}/{job_id}"
     response = requests.put(update_url, json={"status": status}, verify=False)
 
     if response.status_code < 400:
@@ -45,8 +47,8 @@ def update_job_status(process_name, api_url, status = "SUCCESS"):
     else:
         print(f"Failed to update job. Response: {response.text}")
 
-def get_most_recent_job_id(process_name, api_url):
-    response = requests.get(api_url, verify=False)
+def get_most_recent_job_id(process_name, API_URL):
+    response = requests.get(API_URL, verify=False)
     jobs = response.json().get('jobs', [])
 
     # Filter jobs by process name and find the most recent one
@@ -62,12 +64,11 @@ if __name__ == "__main__":
 
     process_name = sys.argv[1]
     operation = sys.argv[2].lower()
-    api_url = "https://msedev7.byu.edu/api/jobs"  # Update with your actual API URL
 
     if operation == "create":
-        create_job(process_name, api_url)
+        create_job(process_name, API_URL)
     elif operation == "update":
-        update_job_status(process_name, api_url)
+        update_job_status(process_name, API_URL)
     else:
         print("Invalid operation. Specify 'create' or 'update'.")
         sys.exit(1)
