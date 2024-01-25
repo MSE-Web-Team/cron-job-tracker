@@ -22,7 +22,7 @@ def create_job(process_name, api_url):
 
     response = requests.post(api_url, json=data, verify=False)
 
-    if response.status_code == 200:
+    if response.status_code < 400:
         job_id = response.json().get('job_id')
         print(f"Job created successfully with ID: {job_id}")
         return job_id
@@ -30,7 +30,7 @@ def create_job(process_name, api_url):
         print(f"Failed to create job. Response: {response.text}")
         return None
 
-def update_job_to_success(process_name, api_url):
+def update_job_status(process_name, api_url, status = "SUCCESS"):
     job_id = get_most_recent_job_id(process_name, api_url)
 
     if not job_id:
@@ -38,10 +38,10 @@ def update_job_to_success(process_name, api_url):
         return
 
     update_url = f"{api_url}/{job_id}"
-    response = requests.put(update_url, json={"status": "SUCCESS"}, verify=False)
+    response = requests.put(update_url, json={"status": status}, verify=False)
 
-    if response.status_code == 200:
-        print(f"Job with ID {job_id} updated to SUCCESS")
+    if response.status_code < 400:
+        print(f"Job with ID {job_id} updated to {status}")
     else:
         print(f"Failed to update job. Response: {response.text}")
 
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     if operation == "create":
         create_job(process_name, api_url)
     elif operation == "update":
-        update_job_to_success(process_name, api_url)
+        update_job_status(process_name, api_url)
     else:
         print("Invalid operation. Specify 'create' or 'update'.")
         sys.exit(1)
