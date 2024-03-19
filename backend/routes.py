@@ -24,7 +24,7 @@ def update_running_jobs():
     """
     try:
         running_jobs = Job.query.filter_by(status='RUNNING').all()
-        current_time = datetime.now(utah)
+        current_time = datetime.now()
 
         for job in running_jobs:
             start_time = job.start_time
@@ -109,7 +109,7 @@ def get_jobs():
 
 
         if unique:
-            jobs = Job.query.distinct(Job.process_name, Job.status).all()
+            jobs = db.session.execute(db.select())
         else:
             jobs = Job.query.all()
 
@@ -155,7 +155,7 @@ def create_job():
             process_name=data['process_name'],
             description=data['description'],
             ongoing=data.get('ongoing', True),
-            start_time=data.get('start_time', datetime.now(utah)),
+            start_time=data.get('start_time', datetime.now()),
             end_time=data.get('end_time'),
             status=data.get('status', 'LOG')
         )
@@ -281,7 +281,7 @@ def create_log_message():
 
         new_log_message = LogMessage(
             process_name=data['process_name'],
-            timestamp=data.get('timestamp', datetime.now(utah)),
+            timestamp=data.get('timestamp', datetime.now()),
             message=data['message'],
             level=data.get('level', 'INFO')
         )
