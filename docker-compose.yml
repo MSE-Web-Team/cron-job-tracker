@@ -6,7 +6,7 @@ services:
       - ./data/db:/root/db
     environment:
       - SQLITE3_DB=db.sqlite3
-    restart: always
+    restart: on-failure
 
 
   backend:
