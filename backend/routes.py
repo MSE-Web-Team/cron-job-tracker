@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, request
 from models import db, Job, LogMessage
 from datetime import datetime, timedelta
+from pytz import timezone
 
 job_routes = Blueprint('job_routes', __name__)
 log_message_routes = Blueprint('log_message_routes', __name__)
+utah = timezone('US/Mountain')
 
 # TODO: Make this run on a schedule
 @job_routes.route('/api/update_running_jobs', methods=['GET'])
@@ -22,7 +24,7 @@ def update_running_jobs():
     """
     try:
         running_jobs = Job.query.filter_by(status='RUNNING').all()
-        current_time = datetime.now()
+        current_time = datetime.now(utah)
 
         for job in running_jobs:
             start_time = job.start_time
@@ -99,7 +101,18 @@ def get_jobs():
     }
     """
     try:
-        jobs = Job.query.all()
+        unique = request.args.get('unique')
+        unique = unique is not None and (unique == '1' or unique.lower() == 'true')
+
+        age = request.args.get('age')
+        age = int(age) if age is not None and age.isdigit() else None
+
+
+        if unique:
+            jobs = Job.query.distinct(Job.process_name, Job.status).all()
+        else:
+            jobs = Job.query.all()
+
         job_list = [{'id': job.id, 'process_name': job.process_name, 'description': job.description,
                      'ongoing': job.ongoing, 'start_time': job.start_time.isoformat(),
                      'end_time': job.end_time.isoformat() if job.end_time else None,
@@ -142,7 +155,7 @@ def create_job():
             process_name=data['process_name'],
             description=data['description'],
             ongoing=data.get('ongoing', True),
-            start_time=data.get('start_time', datetime.utcnow()),
+            start_time=data.get('start_time', datetime.now(utah)),
             end_time=data.get('end_time'),
             status=data.get('status', 'LOG')
         )
@@ -268,7 +281,7 @@ def create_log_message():
 
         new_log_message = LogMessage(
             process_name=data['process_name'],
-            timestamp=data.get('timestamp', datetime.utcnow()),
+            timestamp=data.get('timestamp', datetime.now(utah)),
             message=data['message'],
             level=data.get('level', 'INFO')
         )
