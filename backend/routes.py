@@ -246,7 +246,16 @@ def get_log_messages():
     }
     """
     try:
-        log_messages = LogMessage.query.all()
+        age = request.args.get('age')
+        age = int(age) if age is not None and age.isdigit() else None
+
+        logQuery = db.session.query(LogMessage.id, LogMessage.process_name, LogMessage.timestamp, LogMessage.message, LogMessage.level)
+
+        if age:
+            logQuery = logQuery.where(LogMessage.start_time > (datetime.now() - timedelta(hours=age)))
+
+        log_messages = logQuery.all()
+
         log_message_list = [{'id': log_message.id, 'process_name': log_message.process_name,
                              'timestamp': log_message.timestamp.isoformat(), 'message': log_message.message,
                              'level': log_message.level} for log_message in log_messages]
