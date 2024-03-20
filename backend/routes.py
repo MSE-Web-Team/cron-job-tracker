@@ -107,11 +107,14 @@ def get_jobs():
         age = request.args.get('age')
         age = int(age) if age is not None and age.isdigit() else None
 
-
+        jobQuery = db.session.query(Job.description, Job.end_time, Job.id, Job.ongoing, Job.start_time, Job.process_name, Job.status)
         if unique:
-            jobs = db.session.execute(db.select())
-        else:
-            jobs = Job.query.all()
+            jobQuery = jobQuery.group_by(Job.process_name, Job.status).order_by(db.func.max(Job.start_time).desc())
+
+        if age:
+            jobQuery = jobQuery.where(Job.start_time > (datetime.now() - timedelta(hours=age)))
+
+        jobs = jobQuery.all()
 
         job_list = [{'id': job.id, 'process_name': job.process_name, 'description': job.description,
                      'ongoing': job.ongoing, 'start_time': job.start_time.isoformat(),
