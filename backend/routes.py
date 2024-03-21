@@ -82,7 +82,8 @@ def get_jobs():
 
     Request Type: GET
 
-    Parameters: None
+    Parameters: unique (boolean, optional): Whether to return only the most recent job for each process name, status combination.
+                age (int, optional): The age of the jobs to return in hours.
 
     Response:
     {
@@ -229,7 +230,7 @@ def get_log_messages():
 
     Request Type: GET
 
-    Parameters: None
+    Parameters: age (int, optional): The age of the jobs to return in hours.
 
     Response:
     {
