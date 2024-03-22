@@ -7,6 +7,12 @@ WORKDIR /app/backend
 # Copy the current directory contents into the container at /app/backend
 COPY backend/ .
 
+RUN chmod 0644 ./crontab
+
+RUN apt-get update && apt-get -y install cron
+
+RUN crontab ./crontab
+
 # Install any needed packages specified in requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
@@ -15,4 +21,4 @@ EXPOSE 5000
 
 
 # Run app.py when the container launches
-CMD ["python3", "app.py"]
+CMD service cron start && python3 app.py

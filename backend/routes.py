@@ -7,11 +7,10 @@ job_routes = Blueprint('job_routes', __name__)
 log_message_routes = Blueprint('log_message_routes', __name__)
 utah = timezone('US/Mountain')
 
-# TODO: Make this run on a schedule
 @job_routes.route('/api/update_running_jobs', methods=['GET'])
 def update_running_jobs():
     """
-    Update the status of running jobs that have been running for more than 24 hours.
+    Update the status of running jobs that have been running for more than 1 hour.
 
     Request Type: GET
 
@@ -32,8 +31,8 @@ def update_running_jobs():
             if start_time is not None:
                 time_difference = current_time - start_time
 
-                if time_difference > timedelta(hours=24):
-                    job.description = 'This job was running for 24 hours and hasn\'t been updated.'
+                if time_difference > timedelta(hours=1):
+                    job.description = 'This job was running for more than an hour and hasn\'t been updated.'
                     job.status = 'ERROR'
                     db.session.commit()
 
