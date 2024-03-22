@@ -253,7 +253,7 @@ def get_log_messages():
         logQuery = db.session.query(LogMessage.id, LogMessage.process_name, LogMessage.timestamp, LogMessage.message, LogMessage.level)
 
         if age:
-            logQuery = logQuery.where(LogMessage.start_time > (datetime.now() - timedelta(hours=age)))
+            logQuery = logQuery.where(LogMessage.timestamp > (datetime.now() - timedelta(hours=age)))
 
         log_messages = logQuery.all()
 
